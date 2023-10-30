@@ -3,4 +3,4 @@ from django.http import HttpResponse
 
 # Create your views here.
 def test_view(request):
-    return HttpResponse("Hello world2")
+    return render(request, "protein_profiler/home.html")
