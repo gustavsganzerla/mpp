@@ -17,10 +17,10 @@ def test_view(request):
 
 
 def prot_char(request):
-
+    output = []
     if request.method == "POST":
         form = proteinForm(request.POST, request.FILES)
-        output = []
+        
         if form.is_valid():
             collected_data = form.cleaned_data
             protein_text = collected_data.get('protein_text')
@@ -28,6 +28,7 @@ def prot_char(request):
 
             if uploaded_file:
                 uploaded_file_data = uploaded_file.read().decode('utf-8')
+                
                 request.session['uploaded_file_data'] = uploaded_file_data
 
                 uploaded_file_io = StringIO(uploaded_file_data)
@@ -39,7 +40,9 @@ def prot_char(request):
                     description = record.description
 
                     output.append({
-                        'length':len(protein)
+                        'length':len(protein),
+                        'description':description
+
                     })
 
                     request.session['output'] = output

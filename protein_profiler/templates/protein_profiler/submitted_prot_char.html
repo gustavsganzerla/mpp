@@ -46,13 +46,18 @@
                 <th>Length</th>
                 
             </tr>
+            <tr>
+                <th>Description</th>
+                
+            </tr>
         </thead>
         <tbody>
             {% for item in output %}
             <tr>
-                
                 <td>{{item.length}}</td>
-                
+            </tr>
+            <tr>
+                <td>{{item.description}}</td>
             </tr>
             {% endfor %}
         </tbody>
