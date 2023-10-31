@@ -6,6 +6,7 @@ from .forms import proteinForm
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqUtils.ProtParam import ProteinAnalysis
+from io import StringIO
 
 
 # Create your views here.
