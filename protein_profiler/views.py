@@ -3,7 +3,9 @@ from django.urls import reverse
 from django.http import HttpResponse
 from .forms import proteinForm
 
-
+from Bio import SeqIO
+from Bio.Seq import Seq
+from Bio.SeqUtils.ProtParam import ProteinAnalysis
 
 
 # Create your views here.
