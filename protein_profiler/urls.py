@@ -5,6 +5,7 @@ from . import views
 app_name = "protein_profiler"
 
 urlpatterns = [
-    path('test_view/', views.test_view, name = "test_view")
+    path('test_view/', views.test_view, name = "test_view"),
+    path('prot_char/', views.prot_char, name = "prot_char")
 ]
 
