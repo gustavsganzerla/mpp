@@ -50,6 +50,10 @@
                 <th>Description</th>
                 
             </tr>
+            <tr>
+                <th>Protein</th>
+                
+            </tr>
         </thead>
         <tbody>
             {% for item in output %}
@@ -58,6 +62,9 @@
             </tr>
             <tr>
                 <td>{{item.description}}</td>
+            </tr>
+            <tr>
+                <td>{{item.protein}}</td>
             </tr>
             {% endfor %}
         </tbody>

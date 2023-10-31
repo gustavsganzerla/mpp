@@ -41,7 +41,8 @@ def prot_char(request):
 
                     output.append({
                         'length':len(protein),
-                        'description':description
+                        'description':description,
+                        'protein':protein
 
                     })
 
