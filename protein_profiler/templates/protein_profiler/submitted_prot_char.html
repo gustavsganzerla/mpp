@@ -53,17 +53,52 @@
                 <th>GRAVY</th>
                 <th>Aliphatic Index</th>
                 <th>Instability Index</th>
+                <th>Stability</th>
+                <th>Molecular Weight</th>
+                <th>Aromaticity</th>
+                <th>Isoelectric Point</th>
+                <th>Charge at pH 7</th>
+                <th>Secondary Structure Fraction (Helix; Turn; Sheet)</th>
+                <th>Molar Extinction Coefficient (Reduced; Oxidized)</th>
+                <th>Atomic Composition</th>
                
             </tr>
         </thead>
         <tbody>
             {% for item in output %}
             <tr>
-                <td>{{ item.accession }}</td>
+                <td> <a href="{% url 'bf_suite:view_protein' id=item.id%}">{{ item.accession }}</td></a>
                 <td>{{item.length}}</td>
                 <td>{{item.gravy}}</td>
                 <td>{{item.aliphatic_index}}</td>
                 <td>{{item.instability_index}}</td>
+                <td>{{item.stability}}</td>
+                <td>{{item.molecular_weight}}</td>
+                <td>{{item.aromaticity}}</td>
+                <td>{{item.isoelectric_point}}</td>
+                <td>{{item.charge_at_pH}}</td>
+                <td>
+                    <ul>
+                        {% for value in item.secondary_structure_fraction %}
+                        <li>{{value}}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        {% for value in item.molar_extinction_coefficient %}
+                        <li>{{value}}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    C<sub>{{ item.atomic_composition.0 }}</sub>
+                    H<sub>{{ item.atomic_composition.1 }}</sub>
+                    O<sub>{{ item.atomic_composition.2 }}</sub>
+                    O<sub>{{ item.atomic_composition.3 }}</sub>
+                    S<sub>{{ item.atomic_composition.4 }}</sub>
+                </td>
+    
             </tr>
             {% endfor %}
         </tbody>

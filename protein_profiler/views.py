@@ -68,6 +68,179 @@ def instability_index(protein):
     x = ProteinAnalysis(protein)
     return(round(x.instability_index(),2))
 
+def molecular_weight(protein):
+    x = ProteinAnalysis(protein)
+    return(round(x.molecular_weight(),2))
+
+def aromaticity(protein):
+    x = ProteinAnalysis(protein)
+    return(round(x.aromaticity(),2))
+
+def isoelectric_point(protein):
+    x = ProteinAnalysis(protein)
+    return(round(x.isoelectric_point(),2))
+
+def atomic_composition(protein):
+    c = 0
+    h = 0
+    o = 0
+    n = 0
+    s = 0
+
+    for aa in protein:
+        if aa == 'A': #Alanine (Ala)
+            c+=3
+            h+=7
+            o+=2
+            n+=1
+            s+=0
+        if aa == 'R': #Arginine (Arg)
+            c+=6
+            h+=14
+            o+=2
+            n+=4
+            s+=0
+        if aa == 'N':#Asparagine (Asn)
+            c+=4
+            h+=8
+            o+=3
+            n+=2
+            s+=0
+        if aa == 'D':#Aspartic Acid (Asp)
+            c+=4
+            h+=7
+            o+=4
+            n+=1
+            s+=0
+        if aa == 'C':#Cysteine (Cys)
+            c+=3
+            h+=7
+            o+=2
+            n+=1
+            s+=1
+        if aa == 'Q':#Glutamine (Gln)
+            c+=5
+            h+=10
+            o+=3
+            n+=2
+            s+=0
+        if aa == 'E':#Glutamic Acid (Glu)
+            c+=5
+            h+=9
+            o+=4
+            n+=1
+            s+=0
+        if aa == 'G':#Glycine (Gly)
+            c+=2
+            h+=5
+            o+=2
+            n+=1
+            s+=0
+        if aa == 'H':#Histidine (His)
+            c+=6
+            h+=9
+            o+=2
+            n+=3
+            s+=0
+        if aa == 'I':#Isoleucine (Ile)
+            c+=6
+            h+=13
+            o+=2
+            n+=1
+            s+=0
+        if aa == 'L':#Leucine (Leu)
+            c+=6
+            h+=13
+            o+=2
+            n+=1
+            s+=0
+        if aa == 'K':#Lysine (Lys)
+            c+=6
+            h+=14
+            o+=2
+            n+=2
+            s+=0
+        if aa == 'M':#Methionine (Met)
+            c+=5
+            h+=11
+            o+=2
+            n+=1
+            s+=1
+        if aa == 'F':#Phenylalanine (Phe)
+            c+=9
+            h+=11
+            o+=2
+            n+=1
+            s+=0
+        if aa == 'P':#Proline (Pro)
+            c+=5
+            h+=9
+            o+=2
+            n+=1
+            s+=0
+        if aa == 'S':#Serine (Ser
+            c+=3
+            h+=7
+            o+=3
+            n+=1
+            s+=0
+        if aa == 'T':#Threonine (Thr)
+            c+=4
+            h+=9
+            o+=3
+            n+=1
+            s+=0
+        if aa == 'W':#Tryptophan (Trp)
+            c+=11
+            h+=12
+            o+=2
+            n+=2
+            s+=0
+        if aa == 'Y':#Tyrosine (Tyr)
+            c+=9
+            h+=11
+            o+=3
+            n+=1
+            s+=0
+        if aa == 'V':#Valine (Val)
+            c+=5
+            h+=11
+            o+=2
+            n+=1
+            s+=0
+
+
+            
+    return c,h,o,n,s
+
+def secondary_structure_fraction(protein):
+    x = ProteinAnalysis(protein)
+    raw_values = x.secondary_structure_fraction()
+    rounded_values = tuple(round(value, 2) for value in raw_values)  # Round to 2 decimal places
+    return rounded_values
+
+def molar_extinction_coefficient(protein):
+    x = ProteinAnalysis(protein)
+    return(x.molar_extinction_coefficient())
+
+def charge_at_pH(protein, ph):
+    x = ProteinAnalysis(protein)
+    return round(x.charge_at_pH(ph),2)
+
+def count_amino_acids(protein):
+    x = ProteinAnalysis(protein)
+    return(x.count_amino_acids())
+
+def get_amino_acids_percent(protein):
+    x = ProteinAnalysis(protein)
+    return x.get_amino_acids_percent()
+
+
+
+
+
+
+
 # Create your views here.
 def test_view(request):
     return render(request, "protein_profiler/home.html")
@@ -109,10 +282,10 @@ def prot_char(request):
                     if match:
                         accession = match.group(1)
                     
-                    #if (instability_index(protein)) < 40:
-                    #    stability = "Stable"
-                    #else:
-                    #    stability = "Unstable"
+                    if (instability_index(protein)) < 40:
+                        stability = "Stable"
+                    else:
+                        stability = "Unstable"
                     
 
                     output.append({
@@ -120,20 +293,20 @@ def prot_char(request):
                         'length': len(protein),
                         'gravy': gravy(protein),
                         'aliphatic_index': aliphatic_index(protein),
-                        'instability_index': instability_index(protein)
-                        #'stability':stability,
-                        #'molecular_weight': molecular_weight(protein),
-                        #'aromaticity': aromaticity(protein),
-                        #'isoelectric_point': isoelectric_point(protein),
-                        #'amino_acid_count': count_amino_acids(protein),
-                        #'secondary_structure_fraction': secondary_structure_fraction(protein),
-                        #'molar_extinction_coefficient': molar_extinction_coefficient(protein),
-                        #'charge_at_pH': charge_at_pH(protein, 7),
-                        #'get_amino_acids_percent': get_amino_acids_percent(protein),
-                        #'description': description,
-                        #'sequence': protein,
-                        #'id':i,
-                        #'atomic_composition': atomic_composition(protein)
+                        'instability_index': instability_index(protein),
+                        'stability':stability,
+                        'molecular_weight': molecular_weight(protein),
+                        'aromaticity': aromaticity(protein),
+                        'isoelectric_point': isoelectric_point(protein),
+                        'amino_acid_count': count_amino_acids(protein),
+                        'secondary_structure_fraction': secondary_structure_fraction(protein),
+                        'molar_extinction_coefficient': molar_extinction_coefficient(protein),
+                        'charge_at_pH': charge_at_pH(protein, 7),
+                        'get_amino_acids_percent': get_amino_acids_percent(protein),
+                        'description': description,
+                        'sequence': protein,
+                        'id':i,
+                        'atomic_composition': atomic_composition(protein)
                     })
                     i+=1
                     
@@ -172,20 +345,20 @@ def prot_char(request):
                         'length': len(protein),
                         'gravy': gravy(protein),
                         'aliphatic_index': aliphatic_index(protein),
-                        'instability_index': instability_index(protein)
-                        #'stability':stability,
-                        #'molecular_weight': molecular_weight(protein),
-                        #'aromaticity': aromaticity(protein),
-                        #'isoelectric_point': isoelectric_point(protein),
-                        #'amino_acid_count': count_amino_acids(protein),
-                        #'secondary_structure_fraction': secondary_structure_fraction(protein),
-                        #'molar_extinction_coefficient': molar_extinction_coefficient(protein),
-                        #'charge_at_pH': charge_at_pH(protein, 7),
-                        #'get_amino_acids_percent': get_amino_acids_percent(protein),
-                        #'description': description,
-                        #'sequence': protein,
-                        #'id':i,
-                        #'atomic_composition': atomic_composition(protein)
+                        'instability_index': instability_index(protein),
+                        'stability':stability,
+                        'molecular_weight': molecular_weight(protein),
+                        'aromaticity': aromaticity(protein),
+                        'isoelectric_point': isoelectric_point(protein),
+                        'amino_acid_count': count_amino_acids(protein),
+                        'secondary_structure_fraction': secondary_structure_fraction(protein),
+                        'molar_extinction_coefficient': molar_extinction_coefficient(protein),
+                        'charge_at_pH': charge_at_pH(protein, 7),
+                        'get_amino_acids_percent': get_amino_acids_percent(protein),
+                        'description': description,
+                        'sequence': protein,
+                        'id':i,
+                        'atomic_composition': atomic_composition(protein)
                     })
                     i+=1
                     
