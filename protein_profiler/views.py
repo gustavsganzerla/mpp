@@ -474,7 +474,6 @@ def plot(request, choice):
     if output:
 
         if choice == 'length':
-            # Extract the 'Length' data from the 'output'
             length_data = [item['length'] for item in output]
             # Create the distribution plot
             plt.hist(length_data)  # Adjust the number of bins as needed
