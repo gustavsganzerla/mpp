@@ -64,7 +64,9 @@ def aliphatic_index(protein):
 
     return round(aliphatic_index,2)
 
-
+def instability_index(protein):
+    x = ProteinAnalysis(protein)
+    return(round(x.instability_index(),2))
 
 # Create your views here.
 def test_view(request):
@@ -117,8 +119,8 @@ def prot_char(request):
                         'accession': accession,
                         'length': len(protein),
                         'gravy': gravy(protein),
-                        'aliphatic_index': aliphatic_index(protein)
-                        #'instability_index': instability_index(protein),
+                        'aliphatic_index': aliphatic_index(protein),
+                        'instability_index': instability_index(protein)
                         #'stability':stability,
                         #'molecular_weight': molecular_weight(protein),
                         #'aromaticity': aromaticity(protein),
@@ -169,8 +171,8 @@ def prot_char(request):
                         'accession': str(accession),
                         'length': len(protein),
                         'gravy': gravy(protein),
-                        'aliphatic_index': aliphatic_index(protein)
-                        #'instability_index': instability_index(protein),
+                        'aliphatic_index': aliphatic_index(protein),
+                        'instability_index': instability_index(protein)
                         #'stability':stability,
                         #'molecular_weight': molecular_weight(protein),
                         #'aromaticity': aromaticity(protein),
