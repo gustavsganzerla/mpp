@@ -245,9 +245,6 @@ def get_amino_acids_percent(protein):
 def test_view(request):
     return render(request, "protein_profiler/home.html")
 
-
-
-
 def prot_char(request):
     if request.method == 'POST':
         form = proteinForm(request.POST, request.FILES)
@@ -413,3 +410,20 @@ def submitted_prot_char(request):
                                                                    'csv_content':csv_content})
     else:
         return redirect('protein_profiler:prot_char')
+    
+
+def download_csv(request):
+    csv_content = request.session.get('csv_content', None)
+
+    if csv_content:
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="output.csv"'
+
+        csv_writer = csv.writer(response)
+        for row in csv_content:
+            csv_writer.writerow(row)
+
+        return response
+    else:
+        # Handle the case where there is no CSV content
+        return HttpResponse("No CSV content available.")
