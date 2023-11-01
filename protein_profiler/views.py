@@ -8,6 +8,7 @@ from Bio.Seq import Seq
 from Bio.SeqUtils.ProtParam import ProteinAnalysis
 from io import StringIO
 import re
+import csv
 
 # Calculations
 def gravy(protein):
