@@ -332,13 +332,10 @@ def prot_char(request):
 
                     if match:
                         accession = match.group(1)
-                    
-                    
-                    
-                    #if (instability_index(protein)) < 40:
-                    #    stability = "Stable"
-                    #else:
-                    #    stability = "Unstable"
+                    if (instability_index(protein)) < 40:
+                        stability = "Stable"
+                    else:
+                        stability = "Unstable"
 
                     output.append({
                         'accession': str(accession),
@@ -378,5 +375,41 @@ def prot_char(request):
 def submitted_prot_char(request):
     output = request.session.get('output', None)
 
-    return render(request, "protein_profiler/submitted_prot_char.html",
-                  context={'output':output})
+    if output:
+        csv_content = []
+        csv_content.append(['Accession',
+                            'Sequence',
+                            'Description',
+                            'Length',
+                            'GRAVY',
+                            'Aliphatic Index',
+                            'Instability Index',
+                            'Stability',
+                            'Molecular Weight',
+                            'Aromaticity',
+                            'Isoelectric Point',
+                            'Charge at pH 7',
+                            ])
+        
+        for sequence in output:
+            csv_content.append([
+                sequence['accession'],
+                sequence['sequence'],
+                sequence['description'],
+                sequence['length'],
+                sequence['gravy'],
+                sequence['aliphatic_index'],
+                sequence['instability_index'],
+                sequence['stability'],
+                sequence['molecular_weight'],
+                sequence['aromaticity'],
+                sequence['isoelectric_point'],
+                sequence['charge_at_pH']
+
+            ])
+        request.session['csv_content'] = csv_content
+
+        return render(request, "protein_profiler/submitted_prot_char.html", context={'output': output,
+                                                                   'csv_content':csv_content})
+    else:
+        return redirect('protein_profiler:prot_char')
