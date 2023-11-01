@@ -40,6 +40,31 @@ def gravy(protein):
         sequence_gravy.append(gravy_value)
     return round(sum(sequence_gravy)/len(protein),2)
 
+def aliphatic_index(protein):
+
+    a = 2.9
+    b = 3.9
+
+    counts = {
+        'A': 0, 
+        'V': 0,
+        'I': 0, 
+        'L': 0, 
+    }
+
+    total_amino_acids = len(protein)
+
+    for amino_acid in protein:
+        if amino_acid in counts:
+            counts[amino_acid] += 1
+
+    mole_percent = {aa: (count / total_amino_acids) * 100 for aa, count in counts.items()}
+
+    aliphatic_index = mole_percent['A'] + a * mole_percent['V'] + b * (mole_percent['I'] + mole_percent['L'])
+
+    return round(aliphatic_index,2)
+
+
 
 # Create your views here.
 def test_view(request):
@@ -91,8 +116,8 @@ def prot_char(request):
                     output.append({
                         'accession': accession,
                         'length': len(protein),
-                        'gravy': gravy(protein)
-                        #'aliphatic_index': aliphatic_index(protein),
+                        'gravy': gravy(protein),
+                        'aliphatic_index': aliphatic_index(protein)
                         #'instability_index': instability_index(protein),
                         #'stability':stability,
                         #'molecular_weight': molecular_weight(protein),
@@ -143,8 +168,8 @@ def prot_char(request):
                     output.append({
                         'accession': str(accession),
                         'length': len(protein),
-                        'gravy': gravy(protein)
-                        #'aliphatic_index': aliphatic_index(protein),
+                        'gravy': gravy(protein),
+                        'aliphatic_index': aliphatic_index(protein)
                         #'instability_index': instability_index(protein),
                         #'stability':stability,
                         #'molecular_weight': molecular_weight(protein),
