@@ -68,7 +68,7 @@
         <tbody>
             {% for item in output %}
             <tr>
-                <td>{{item.accession}}</td>
+                <td> <a href="{% url 'protein_profiler:view_protein' id=item.id%}">{{ item.accession }}</td></a>
                 <td>{{item.length}}</td>
                 <td>{{item.gravy}}</td>
                 <td>{{item.aliphatic_index}}</td>

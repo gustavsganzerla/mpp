@@ -239,9 +239,6 @@ def get_amino_acids_percent(protein):
 
 
 
-
-
-
 # Create your views here.
 def test_view(request):
     return render(request, "protein_profiler/home.html")
@@ -428,3 +425,33 @@ def download_csv(request):
     else:
         # Handle the case where there is no CSV content
         return HttpResponse("No CSV content available.")
+    
+def view_protein(request, id):
+    output = request.session.get('output', None)
+    print(id)
+    protein = []
+
+    if output:
+        for sequence in output:
+            
+            if str(id) == str(sequence['id']):
+                
+                protein.append({
+                    'accession':sequence['accession'],
+                    'description':sequence['description'],
+                    'length':sequence['length'],
+                    'sequence':sequence['sequence'],
+                    'gravy':sequence['gravy'],
+                    'aliphatic_index':sequence['aliphatic_index'],
+                    'instability_index':sequence['instability_index'],
+                    'stability':sequence['stability'],
+                    'molecular_weight':sequence['molecular_weight'],
+                    'aromaticity':sequence['aromaticity'],
+                    'isoelectric_point':sequence['isoelectric_point'],
+                    'charge_at_pH':sequence['charge_at_pH'],
+                    'get_amino_acids_percent': sequence['get_amino_acids_percent'],
+                    'atomic_composition':sequence['atomic_composition']
+
+                })
+
+    return render(request, "protein_profiler/view_protein.html", context={'protein':protein})
