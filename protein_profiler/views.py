@@ -7,8 +7,12 @@ from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqUtils.ProtParam import ProteinAnalysis
 from io import StringIO
+from io import BytesIO
 import re
 import csv
+import matplotlib
+import matplotlib.pyplot as plt
+import base64
 
 # Calculations
 def gravy(protein):
@@ -455,3 +459,33 @@ def view_protein(request, id):
                 })
 
     return render(request, "protein_profiler/view_protein.html", context={'protein':protein})
+
+
+def plot(request, choice):
+    matplotlib.use('agg')  # Use the Agg backend
+    # Retrieve the 'output' data from the session
+    output = request.session.get('output', None)
+    plt.clf()
+    if output:
+
+        if choice == 'length':
+            # Extract the 'Length' data from the 'output'
+            length_data = [item['length'] for item in output]
+            # Create the distribution plot
+            plt.hist(length_data)  # Adjust the number of bins as needed
+            plt.xlabel("Amino acids")
+            plt.ylabel("Frequency")
+
+            # Save the plot as an image
+            buffer = BytesIO()
+            plt.savefig(buffer, format='png')
+            buffer.seek(0)
+
+            # Encode the plot as base64
+            plot_image = base64.b64encode(buffer.read()).decode()
+
+            # Pass the plot image to the template
+            context = {
+                'plot_image': plot_image,
+            }
+        return render(request, "protein_profiler/plot.html", context)
