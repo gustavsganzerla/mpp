@@ -329,7 +329,7 @@ def prot_char(request):
                     protein = str(protein)
                     
                     description = record.description
-                    accession = ""
+                    accession = "NONE"
 
                     pattern = r'\|([A-Za-z0-9]+)\|'
 
