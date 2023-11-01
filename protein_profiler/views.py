@@ -14,6 +14,8 @@ import matplotlib
 import matplotlib.pyplot as plt
 import base64
 
+matplotlib.use('agg')  # Use the Agg backend
+
 # Calculations
 def gravy(protein):
     gravy_values = {
@@ -462,7 +464,7 @@ def view_protein(request, id):
 
 
 def plot(request, choice):
-    matplotlib.use('agg')  # Use the Agg backend
+    
     # Retrieve the 'output' data from the session
     output = request.session.get('output', None)
     plt.clf()
