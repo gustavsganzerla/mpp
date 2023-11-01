@@ -39,32 +39,25 @@
   
     <body>
         <h1>Results</h1>
-        
+        {% if csv_content %}
+    
+        <button class="btn btn-primary">Download Profiled Proteins as .csv</button>
+    </a>
+    <br>
+{% endif %}
     <table>
         <thead>
             <tr>
+                <th>Acession</th>
                 <th>Length</th>
-                
-            </tr>
-            <tr>
-                <th>Description</th>
-                
-            </tr>
-            <tr>
-                <th>Protein</th>
-                
+               
             </tr>
         </thead>
         <tbody>
             {% for item in output %}
             <tr>
+                <td>{{ item.accession }}</td>
                 <td>{{item.length}}</td>
-            </tr>
-            <tr>
-                <td>{{item.description}}</td>
-            </tr>
-            <tr>
-                <td>{{item.protein}}</td>
             </tr>
             {% endfor %}
         </tbody>
