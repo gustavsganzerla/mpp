@@ -492,5 +492,145 @@ def plot(request, choice):
             context = {
                 'plot_image': plot_image,
             }
+        if choice == 'gravy':
+            gravy = [item['gravy'] for item in output]
+            x = [item['id'] for item in output]
+            plt.scatter(y = gravy, x = x)
+            plt.xlabel("Protein ID")
+            plt.ylabel("GRAVY")
+
+            buffer = BytesIO()
+            plt.savefig(buffer, format='png')
+            buffer.seek(0)
+
+            plot_image = base64.b64encode(buffer.read()).decode()
+
+            context = {
+                'plot_image': plot_image,
+            }
+        if choice == 'aliphatic_index':
+            aliphatic_index = [item['aliphatic_index'] for item in output]
+            x = [item['id'] for item in output]
+            plt.scatter(y = aliphatic_index, x = x)
+            plt.xlabel("Protein ID")
+            plt.ylabel("Aliphatic Index")
+
+            buffer = BytesIO()
+            plt.savefig(buffer, format='png')
+            buffer.seek(0)
+
+            plot_image = base64.b64encode(buffer.read()).decode()
+
+            context = {
+                'plot_image': plot_image,
+            }
+        if choice == 'instability_index':
+            instability_index = [item['instability_index'] for item in output]
+            x = [item['id'] for item in output]
+            plt.scatter(y = instability_index, x = x)
+            plt.xlabel("Protein ID")
+            plt.ylabel("Instability Index")
+            plt.axhline(y = 40, color = 'r', linestyle = '-') 
+
+            buffer = BytesIO()
+            plt.savefig(buffer, format='png')
+            buffer.seek(0)
+
+            plot_image = base64.b64encode(buffer.read()).decode()
+
+            context = {
+                'plot_image': plot_image,
+            }
+        if choice == 'stability':
+            stability = [item['stability'] for item in output]
+
+            # Count the occurrences of each stability value
+            stability_counts = Counter(stability)
+
+            # Prepare the data for the pie chart
+            labels = stability_counts.keys()
+            sizes = stability_counts.values()
+            print(stability_counts)
+
+            # Define colors for the pie chart
+            colors = ['green', 'red']
+
+            # Create the pie chart
+            plt.figure(figsize=(6, 6))
+            plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140)
+
+            buffer = BytesIO()
+            plt.savefig(buffer, format='png')
+            buffer.seek(0)
+
+            plot_image = base64.b64encode(buffer.read()).decode()
+
+            context = {
+                'plot_image': plot_image,
+            }
+        if choice == 'molecular_weight':
+            molecular_weight = [item['molecular_weight'] for item in output]
+            x = [item['id'] for item in output]
+            plt.scatter(y = molecular_weight, x = x)
+            plt.xlabel("Protein ID")
+            plt.ylabel("Molecular Weight")
+
+            buffer = BytesIO()
+            plt.savefig(buffer, format='png')
+            buffer.seek(0)
+
+            plot_image = base64.b64encode(buffer.read()).decode()
+
+            context = {
+                'plot_image': plot_image,
+            }
+        if choice == 'aromaticity':
+            aromaticity = [item['aromaticity'] for item in output]
+            x = [item['id'] for item in output]
+            plt.scatter(y = aromaticity, x = x)
+            plt.xlabel("Protein ID")
+            plt.ylabel("Aromaticity")
+
+            buffer = BytesIO()
+            plt.savefig(buffer, format='png')
+            buffer.seek(0)
+
+            plot_image = base64.b64encode(buffer.read()).decode()
+
+            context = {
+                'plot_image': plot_image,
+            }
+        if choice == 'isoelectric_point':
+            isoelectric_point = [item['isoelectric_point'] for item in output]
+            x = [item['id'] for item in output]
+            plt.scatter(y = isoelectric_point, x = x)
+            plt.xlabel("Protein ID")
+            plt.ylabel("Isoelectric Point")
+
+            buffer = BytesIO()
+            plt.savefig(buffer, format='png')
+            buffer.seek(0)
+
+            plot_image = base64.b64encode(buffer.read()).decode()
+
+            context = {
+                'plot_image': plot_image,
+            }
+        if choice == 'charge_at_pH':
+            charge_at_pH = [item['charge_at_pH'] for item in output]
+            x = [item['id'] for item in output]
+            plt.scatter(y = charge_at_pH, x = x)
+            plt.xlabel("Protein ID")
+            plt.ylabel("Charge at pH 7")
+
+            buffer = BytesIO()
+            plt.savefig(buffer, format='png')
+            buffer.seek(0)
+
+            plot_image = base64.b64encode(buffer.read()).decode()
+
+            context = {
+                'plot_image': plot_image,
+            }
 
         return render(request, "protein_profiler/plot.html", context)

@@ -53,14 +53,30 @@
                 <th>
                     <a href="{% url 'protein_profiler:plot' choice='length' %}">Length</a>
                 </th>
-                <th>GRAVY</th>
-                <th>Aliphatic Index</th>
-                <th>Instability Index</th>
-                <th>Stability</th>
-                <th>Molecular Weight</th>
-                <th>Aromaticity</th>
-                <th>Isoelectric Point</th>
-                <th>Charge at pH 7</th>
+                <th>
+                    <a href="{% url 'protein_profiler:plot' choice='gravy' %}">GRAVY</a>
+                </th>
+                <th>
+                    <a href="{% url 'protein_profiler:plot' choice='aliphatic_index' %}">Aliphatic Index</a>
+                </th>
+                <th>
+                    <a href="{% url 'protein_profiler:plot' choice='instability_index' %}">Instability Index</a>
+                </th>
+                <th>
+                    <a href="{% url 'protein_profiler:plot' choice='stability' %}">Stability</a>
+                </th>
+                <th>
+                    <a href="{% url 'protein_profiler:plot' choice='molecular_weight' %}">Molecular Weight</a>
+                </th>
+                <th>
+                    <a href="{% url 'protein_profiler:plot' choice='aromaticity' %}">Aromaticity</a>
+                </th>
+                <th>
+                    <a href="{% url 'protein_profiler:plot' choice='isoelectric_point' %}">Isoelectric Point</a>
+                </th>
+                <th>
+                    <a href="{% url 'protein_profiler:plot' choice='charge_at_pH' %}">Charge at pH 7</a>
+                </th>
                 <th>Secondary Structure Fraction (Helix; Turn; Sheet)</th>
                 <th>Molar Extinction Coefficient (Reduced; Oxidized)</th>
                 <th>Atomic Composition</th>
