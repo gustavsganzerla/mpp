@@ -29,7 +29,7 @@ DEBUG = False
 ALLOWED_HOSTS = ['172.105.99.100', 
                  '127.0.0.1',
                  'mproteinprofiler.microbiologyandimmunology.dal.ca',
-                 'http://mproteinprofiler.microbiologyandimmunology.dal.ca/protein_profiler/submitted_prot_char/']
+                 'mproteinprofiler.microbiologyandimmunology.dal.ca/protein_profiler/submitted_prot_char/']
 
 
 # Application definition
