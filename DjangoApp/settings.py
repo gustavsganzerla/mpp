@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-n3p_de=lyf_-iq7v#=b^zp4d2p7e#5$vni3lfpj%t$n#&0fwi7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['172.105.99.100', '127.0.0.1']
+ALLOWED_HOSTS = ['172.105.99.100', 
+                 '127.0.0.1',
+                 'mproteinprofiler.microbiologyandimmunology.dal.ca ']
 
 
 # Application definition
