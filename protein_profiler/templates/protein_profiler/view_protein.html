@@ -31,6 +31,22 @@
         th:first-child, td:first-child {
             text-align: center;
         }
+
+        #scrollToTop {
+            display: none; /* Hide the button by default */
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 99;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+        }
     </style>
     </head>
 
@@ -95,7 +111,7 @@
                 C<sub>{{ item.atomic_composition.0 }}</sub>
                 H<sub>{{ item.atomic_composition.1 }}</sub>
                 O<sub>{{ item.atomic_composition.2 }}</sub>
-                O<sub>{{ item.atomic_composition.3 }}</sub>
+                N<sub>{{ item.atomic_composition.3 }}</sub>
                 S<sub>{{ item.atomic_composition.4 }}</sub>
             </td>
         </tr>
@@ -110,6 +126,31 @@
             </td>
         </tr>
     </table>
+
+        <!-- Button to scroll to the top -->
+        <button id="scrollToTop" onclick="scrollToTop()">Back to Top</button>
+    
+        <script>
+            // Show the button when the user scrolls down 20px from the top of the document
+            window.onscroll = function() {
+                scrollFunction();
+            };
+    
+            function scrollFunction() {
+                var button = document.getElementById("scrollToTop");
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    button.style.display = "block";
+                } else {
+                    button.style.display = "none";
+                }
+            }
+    
+            // Scroll to the top of the document when the button is clicked
+            function scrollToTop() {
+                document.body.scrollTop = 0; // For Safari
+                document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
+            }
+        </script>
 
 {% endfor %}
 {% endblock %}
