@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,6 +27,9 @@
                   
               </div>
           </div>
+          <div class="image-container ms-auto">
+            <img src="{% static "images/dal.png" %}" alt="Dal Logo" width="75" height="75">
+        </div>
       </div>
     </nav>
 </head>
@@ -38,10 +43,12 @@
   </div>
   </body>
 
-  <footer class="bg-secondary text-black text-left">
-    <p>&copy; 2023 Laboratory of Emerging Infectious Diseases, Dalhousie University</p>
-    <p>Documentation</p>
-    <p>
+  <footer class="bg-secondary text-black text-center">
+    <img src="{% static 'images/dal_fm.png' %}" alt="DalFM" width="250" height="100"> 
+    <p style="margin-bottom: 3px;">Department of Microbiology & Immunology</p>
+    <p style="margin-bottom: 3px;">&copy; 2023 Laboratory of Emerging Infectious Diseases</p>
+    <p style="margin-bottom: 3px;">Documentation</p>
+    <p style="margin-bottom: 3px;">
         <a href="https://github.com/gustavsganzerla/mpp">
             <i class="fab fa-github"></i> GitHub
         </a>
