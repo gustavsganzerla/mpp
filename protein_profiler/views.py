@@ -634,3 +634,7 @@ def plot(request, choice):
             }
 
         return render(request, "protein_profiler/plot.html", context)
+
+
+def about(request):
+    return render(request, 'protein_profiler/about.html')
