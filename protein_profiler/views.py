@@ -278,14 +278,11 @@ def prot_char(request):
                     protein = str(protein)
                     
                     description = record.description
-                    accession = ""
+                    accession = "NONE"
 
-                    pattern = r'\|([A-Za-z0-9]+)\|'
-
-                    match = re.search(pattern, description)
-
-                    if match:
-                        accession = match.group(1)
+                    accession = description
+                    accession = accession.split(" ")
+                    accession = accession[0]
                     
                     if (instability_index(protein)) < 40:
                         stability = "Stable"
@@ -331,12 +328,13 @@ def prot_char(request):
                     description = record.description
                     accession = "NONE"
 
-                    pattern = r'\|([A-Za-z0-9]+)\|'
+                    
+                        
+                    accession = description
+                    accession = accession.split(" ")
+                    accession = accession[0]
 
-                    match = re.search(pattern, description)
 
-                    if match:
-                        accession = match.group(1)
                     if (instability_index(protein)) < 40:
                         stability = "Stable"
                     else:
