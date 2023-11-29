@@ -273,44 +273,50 @@ def prot_char(request):
                 uploaded_file_io = StringIO(uploaded_file_data)
                 
                 for record in SeqIO.parse(uploaded_file_io, "fasta"):
-                    
-                    protein = record.seq
-                    protein = str(protein)
-                    
-                    description = record.description
-                    accession = "NONE"
 
-                    accession = description
-                    accession = accession.split(" ")
-                    accession = accession[0]
-                    
-                    if (instability_index(protein)) < 40:
-                        stability = "Stable"
-                    else:
-                        stability = "Unstable"
-                    
+                    allowed_amino_acids = set("ARNDCQEGHIJKLMFPSTWYV")
 
-                    output.append({
-                        'accession': accession,
-                        'length': len(protein),
-                        'gravy': gravy(protein),
-                        'aliphatic_index': aliphatic_index(protein),
-                        'instability_index': instability_index(protein),
-                        'stability':stability,
-                        'molecular_weight': molecular_weight(protein),
-                        'aromaticity': aromaticity(protein),
-                        'isoelectric_point': isoelectric_point(protein),
-                        'amino_acid_count': count_amino_acids(protein),
-                        'secondary_structure_fraction': secondary_structure_fraction(protein),
-                        'molar_extinction_coefficient': molar_extinction_coefficient(protein),
-                        'charge_at_pH': charge_at_pH(protein, 7),
-                        'get_amino_acids_percent': get_amino_acids_percent(protein),
-                        'description': description,
-                        'sequence': protein,
-                        'id':i,
-                        'atomic_composition': atomic_composition(protein)
-                    })
-                    i+=1
+                    if all(aa in allowed_amino_acids for aa in str(record.seq)):
+
+                    
+                        protein = record.seq
+                        protein = str(protein)
+                    
+                        
+                        description = record.description
+                        accession = "NONE"
+
+                        accession = description
+                        accession = accession.split(" ")
+                        accession = accession[0]
+                        
+                        if (instability_index(protein)) < 40:
+                            stability = "Stable"
+                        else:
+                            stability = "Unstable"
+                        
+
+                        output.append({
+                            'accession': accession,
+                            'length': len(protein),
+                            'gravy': gravy(protein),
+                            'aliphatic_index': aliphatic_index(protein),
+                            'instability_index': instability_index(protein),
+                            'stability':stability,
+                            'molecular_weight': molecular_weight(protein),
+                            'aromaticity': aromaticity(protein),
+                            'isoelectric_point': isoelectric_point(protein),
+                            'amino_acid_count': count_amino_acids(protein),
+                            'secondary_structure_fraction': secondary_structure_fraction(protein),
+                            'molar_extinction_coefficient': molar_extinction_coefficient(protein),
+                            'charge_at_pH': charge_at_pH(protein, 7),
+                            'get_amino_acids_percent': get_amino_acids_percent(protein),
+                            'description': description,
+                            'sequence': protein,
+                            'id':i,
+                            'atomic_composition': atomic_composition(protein)
+                        })
+                        i+=1
                     
 
                                         
@@ -322,45 +328,50 @@ def prot_char(request):
                 protein_data = protein_text
 
                 for record in SeqIO.parse(StringIO(protein_data), "fasta"):
-                    protein = record.seq
-                    protein = str(protein)
-                    
-                    description = record.description
-                    accession = "NONE"
+                    allowed_amino_acids = set("ARNDCQEGHIJKLMFPSTWYV")
+
+                    if all(aa in allowed_amino_acids for aa in str(record.seq)):
 
                     
+                        protein = record.seq
+                        protein = str(protein)
+                    
+                        description = record.description
+                        accession = "NONE"
+
                         
-                    accession = description
-                    accession = accession.split(" ")
-                    accession = accession[0]
+                            
+                        accession = description
+                        accession = accession.split(" ")
+                        accession = accession[0]
 
 
-                    if (instability_index(protein)) < 40:
-                        stability = "Stable"
-                    else:
-                        stability = "Unstable"
+                        if (instability_index(protein)) < 40:
+                            stability = "Stable"
+                        else:
+                            stability = "Unstable"
 
-                    output.append({
-                        'accession': str(accession),
-                        'length': len(protein),
-                        'gravy': gravy(protein),
-                        'aliphatic_index': aliphatic_index(protein),
-                        'instability_index': instability_index(protein),
-                        'stability':stability,
-                        'molecular_weight': molecular_weight(protein),
-                        'aromaticity': aromaticity(protein),
-                        'isoelectric_point': isoelectric_point(protein),
-                        'amino_acid_count': count_amino_acids(protein),
-                        'secondary_structure_fraction': secondary_structure_fraction(protein),
-                        'molar_extinction_coefficient': molar_extinction_coefficient(protein),
-                        'charge_at_pH': charge_at_pH(protein, 7),
-                        'get_amino_acids_percent': get_amino_acids_percent(protein),
-                        'description': description,
-                        'sequence': protein,
-                        'id':i,
-                        'atomic_composition': atomic_composition(protein)
-                    })
-                    i+=1
+                        output.append({
+                            'accession': str(accession),
+                            'length': len(protein),
+                            'gravy': gravy(protein),
+                            'aliphatic_index': aliphatic_index(protein),
+                            'instability_index': instability_index(protein),
+                            'stability':stability,
+                            'molecular_weight': molecular_weight(protein),
+                            'aromaticity': aromaticity(protein),
+                            'isoelectric_point': isoelectric_point(protein),
+                            'amino_acid_count': count_amino_acids(protein),
+                            'secondary_structure_fraction': secondary_structure_fraction(protein),
+                            'molar_extinction_coefficient': molar_extinction_coefficient(protein),
+                            'charge_at_pH': charge_at_pH(protein, 7),
+                            'get_amino_acids_percent': get_amino_acids_percent(protein),
+                            'description': description,
+                            'sequence': protein,
+                            'id':i,
+                            'atomic_composition': atomic_composition(protein)
+                        })
+                        i+=1
                     
 
                                         
