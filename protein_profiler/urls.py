@@ -11,7 +11,8 @@ urlpatterns = [
     path('download_csv/', views.download_csv, name = "download_csv"),
     path('view_protein/<str:id>/', views.view_protein, name='view_protein'),
     path('plot/<str:choice>/', views.plot, name='plot'),
-    path('about/', views.about, name = 'about')
-    
+    path('about/', views.about, name = 'about'),
+    path('download/', views.download, name = 'download'),
+    path('download_zip_file/', views.download_zip_file, name = 'download_zip_file')
 ]
 

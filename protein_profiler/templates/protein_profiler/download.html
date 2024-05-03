@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<p> This is a step by step guide to execute the local version of Multiple Protein Profiler 1.0.</p>
+
+    <p>There dependencies for it to execute are</p>
+    <ul>
+    <li>A. Python 3.12</li>
+    <li>B. The Bio Python package.</li>
+    <li>C. A command line environment.</li>
+    </ul>
+    <br>
+    <p>Once points A, B, and C are covered, proceed to:</p>
+    
+    <ol>
+    <li>Download the mpp_local.zip file from link.</li>
+        <li>Unzip the file.</li>
+            <li>Create a working directory and move mpp.py to the working directory.</li>
+                <li>Ensure you have Python3.12 installed and accessible through command line.</li>
+                    <li>Install the Bio package.</li>
+                            pip3.12 install Bio</li>
+                            <li>After installation, you can execute mpp.py.</li>
+                                <li>Select the input file containing the proteins you want to predict the physico-chemical structures in .fasta format.</li>
+                                    <li>Specify the output file, preferably a .csv.</li>
+    <br>
+    <br>
+    <p>The command of mpp.py should look like:
+    
+    <p>python3.12 mpp.py input_file.fasta output_file.csv</p>
+    
+    
+    
+
+
+<button id="downloadButton">Download Zip File</button>
+
+
+<script>
+    document.getElementById("downloadButton").addEventListener("click", function() {
+        // Redirect to the URL of the download view
+        window.location.href = "{% url 'protein_profiler:download_zip_file' %}";
+    });
+    </script>
+{% endblock %}

@@ -19,6 +19,13 @@ import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
 
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+import requests
+import zipfile
+from django.conf import settings
+import os
 
 # Calculations
 def gravy(protein):
@@ -324,7 +331,7 @@ def prot_char(request):
                 request.session['output'] = output
                 return redirect(reverse('protein_profiler:submitted_prot_char'))
             
-            elif protein_text:
+            if protein_text:
                 protein_data = protein_text
 
                 for record in SeqIO.parse(StringIO(protein_data), "fasta"):
@@ -379,6 +386,8 @@ def prot_char(request):
                 request.session['output'] = output
                 return redirect(reverse('protein_profiler:submitted_prot_char'))
 
+
+
     else:
         form = proteinForm()
     
@@ -388,7 +397,6 @@ def prot_char(request):
 
 def submitted_prot_char(request):
     output = request.session.get('output', None)
-
     if output:
         csv_content = []
         csv_content.append(['Accession',
@@ -474,7 +482,6 @@ def view_protein(request, id):
                 })
 
     return render(request, "protein_profiler/view_protein.html", context={'protein':protein})
-
 
 def plot(request, choice):
     # Retrieve the 'output' data from the session
@@ -644,6 +651,35 @@ def plot(request, choice):
 
         return render(request, "protein_profiler/plot.html", context)
 
-
 def about(request):
     return render(request, 'protein_profiler/about.html')
+
+def download(request):
+    return render(request, 'protein_profiler/download.html')
+
+import os
+from django.http import HttpResponse
+from django.conf import settings
+
+def download_zip_file(request):
+    zip_file_path = os.path.join(settings.MEDIA_ROOT, 'zip_files', 'mpp_local.zip')
+
+    # Print out the path for debugging
+    print("Zip file path:", zip_file_path)
+
+    # Check if the file exists
+    if not os.path.exists(zip_file_path):
+        return HttpResponse('File not found', status=404)
+    
+    # Open the zip file in binary mode
+    with open(zip_file_path, 'rb') as file:
+        response = HttpResponse(file.read(), content_type='application/zip')
+        response['Content-Disposition'] = 'attachment; filename="mpp_local.zip"'
+        return response
+
+            
+
+
+
+
+
