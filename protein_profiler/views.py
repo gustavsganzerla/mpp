@@ -651,7 +651,7 @@ def plot(request, choice):
 
         return render(request, "protein_profiler/plot.html", context)
 
-def about(request):
+def how_to_use(request):
     return render(request, 'protein_profiler/about.html')
 
 def download(request):
