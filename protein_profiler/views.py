@@ -678,8 +678,8 @@ def download_zip_file(request):
         return response
 
             
-
-
+def publication(request):
+    return render(request, 'protein_profiler/publication.html')
 
 
 
