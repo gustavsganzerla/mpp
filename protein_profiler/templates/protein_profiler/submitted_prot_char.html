@@ -49,6 +49,14 @@
             font-size: 16px;
             cursor: pointer;
         }
+        .button-container {
+            display: flex;
+            flex-direction: row;
+        }
+        
+        .button-container a {
+            margin-right: 10px; /* Adjust spacing between buttons if needed */
+        }
 
     </style>
     </head>
@@ -57,10 +65,16 @@
     <body>
         <h1>Results</h1>
         {% if csv_content %}
-        <a href="{% url 'protein_profiler:download_csv' %}" download>
-    
-        <button class="btn btn-primary">Download Profiled Proteins as .csv</button>
-    </a>
+        <div class="button-container">
+            <a href="{% url 'protein_profiler:download_csv' %}" download class="btn btn-primary">
+                Download Profiled Proteins as .csv
+            </a>
+            <a href="{% url 'protein_profiler:download_plots' %}" download class="btn btn-primary">
+                Download Zipped Plots
+            </a>
+        </div>
+        
+
     <br>
 {% endif %}
     <table>

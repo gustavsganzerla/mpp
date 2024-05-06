@@ -26,6 +26,8 @@ import requests
 import zipfile
 from django.conf import settings
 import os
+import tempfile
+import shutil
 
 # Calculations
 def gravy(protein):
@@ -394,7 +396,6 @@ def prot_char(request):
 
     return render(request, "protein_profiler/prot_char.html", context={'form': form})
 
-
 def submitted_prot_char(request):
     output = request.session.get('output', None)
     if output:
@@ -436,7 +437,6 @@ def submitted_prot_char(request):
     else:
         return redirect('protein_profiler:prot_char')
     
-
 def download_csv(request):
     csv_content = request.session.get('csv_content', None)
 
@@ -484,27 +484,26 @@ def view_protein(request, id):
     return render(request, "protein_profiler/view_protein.html", context={'protein':protein})
 
 def plot(request, choice):
-    # Retrieve the 'output' data from the session
     output = request.session.get('output', None)
     plt.clf()
     if output:
 
         if choice == 'length':
             length_data = [item['length'] for item in output]
-            # Create the distribution plot
-            plt.hist(length_data)  # Adjust the number of bins as needed
+
+            plt.hist(length_data)  
             plt.xlabel("Amino acids")
             plt.ylabel("Frequency")
 
-            # Save the plot as an image
+            
             buffer = BytesIO()
             plt.savefig(buffer, format='png')
             buffer.seek(0)
 
-            # Encode the plot as base64
+
             plot_image = base64.b64encode(buffer.read()).decode()
 
-            # Pass the plot image to the template
+
             context = {
                 'plot_image': plot_image,
             }
@@ -547,7 +546,6 @@ def plot(request, choice):
             plt.xlabel("Protein ID")
             plt.ylabel("Instability Index")
             plt.axhline(y = 40, color = 'r', linestyle = '-') 
-
             buffer = BytesIO()
             plt.savefig(buffer, format='png')
             buffer.seek(0)
@@ -657,29 +655,157 @@ def how_to_use(request):
 def download(request):
     return render(request, 'protein_profiler/download.html')
 
-import os
-from django.http import HttpResponse
-from django.conf import settings
-
 def download_zip_file(request):
     zip_file_path = os.path.join(settings.MEDIA_ROOT, 'zip_files', 'mpp_local.zip')
 
-    # Print out the path for debugging
-    print("Zip file path:", zip_file_path)
-
-    # Check if the file exists
     if not os.path.exists(zip_file_path):
         return HttpResponse('File not found', status=404)
     
-    # Open the zip file in binary mode
     with open(zip_file_path, 'rb') as file:
         response = HttpResponse(file.read(), content_type='application/zip')
         response['Content-Disposition'] = 'attachment; filename="mpp_local.zip"'
         return response
-
             
 def publication(request):
     return render(request, 'protein_profiler/publication.html')
 
+def download_plots(request):
+    output = request.session.get('output', None)
+
+    if not output:
+        return HttpResponse("No data available to download.", status=404)
+
+    temp_dir = tempfile.mkdtemp()
+
+    #individually plotting each column
+
+    #length
+    length_data = [item['length'] for item in output]
+    plt.hist(length_data)
+    plt.xlabel("Amino acids")
+    plt.ylabel("Frequency")
+    length_plot_path = os.path.join(temp_dir, 'length_plot.png')
+    plt.savefig(length_plot_path)
+    plt.close()
+
+    #GRAVY
+    gravy = [item['gravy'] for item in output]
+    x = [item['id'] for item in output]
+    plt.scatter(y = gravy, x = x)
+    plt.xlabel("Protein ID")
+    plt.ylabel("GRAVY")
+    gravy_plot_path = os.path.join(temp_dir, 'gravy_plot.png')
+    plt.savefig(gravy_plot_path)
+    plt.close()
+
+    #aliphatic index
+    aliphatic_index = [item['aliphatic_index'] for item in output]
+    x = [item['id'] for item in output]
+    plt.scatter(y = aliphatic_index, x = x)
+    plt.xlabel("Protein ID")
+    plt.ylabel("Aliphatic Index")
+    aliphatic_index_plot_path = os.path.join(temp_dir, 'aliphatic_index.png')
+    plt.savefig(aliphatic_index_plot_path)
+    plt.close()
+
+    #instability index
+    instability_index = [item['instability_index'] for item in output]
+    x = [item['id'] for item in output]
+    plt.scatter(y = instability_index, x = x)
+    plt.xlabel("Protein ID")
+    plt.ylabel("Instability Index")
+    plt.axhline(y = 40, color = 'r', linestyle = '-') 
+    instability_index_plot_path = os.path.join(temp_dir, 'instability_index.png')
+    plt.savefig(instability_index_plot_path)
+    plt.close()
+
+    #stability
+    stability = [item['stability'] for item in output]
+    stability_counts = Counter(stability)
+    labels = stability_counts.keys()
+    sizes = stability_counts.values()
+    colors = ['green', 'red']
+    plt.figure(figsize=(6, 6))
+    plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140)
+    stability_plot_path = os.path.join(temp_dir, 'stability.png')
+    plt.savefig(stability_plot_path)
+    plt.close()
+
+    #molecular weight
+    molecular_weight = [item['molecular_weight'] for item in output]
+    x = [item['id'] for item in output]
+    plt.scatter(y = molecular_weight, x = x)
+    plt.xlabel("Protein ID")
+    plt.ylabel("Molecular Weight")
+    molecular_weight_plot_path = os.path.join(temp_dir, 'molecular_weight.png')
+    plt.savefig(molecular_weight_plot_path)
+    plt.close()
+
+    #aromaticity
+    aromaticity = [item['aromaticity'] for item in output]
+    x = [item['id'] for item in output]
+    plt.scatter(y = aromaticity, x = x)
+    plt.xlabel("Protein ID")
+    plt.ylabel("Aromaticity")
+    aromaticity_plot_path = os.path.join(temp_dir, 'aromaticity.png')
+    plt.savefig(aromaticity_plot_path)
+    plt.close()
+
+    #isoelectric point
+    isoelectric_point = [item['isoelectric_point'] for item in output]
+    x = [item['id'] for item in output]
+    plt.scatter(y = isoelectric_point, x = x)
+    plt.xlabel("Protein ID")
+    plt.ylabel("Isoelectric Point")
+    isoelectric_point_plot_path = os.path.join(temp_dir, 'isoelectric_point.png')
+    plt.savefig(isoelectric_point_plot_path)
+    plt.close()
+
+    #charge at ph 7
+    charge_at_pH = [item['charge_at_pH'] for item in output]
+    x = [item['id'] for item in output]
+    plt.scatter(y = charge_at_pH, x = x)
+    plt.xlabel("Protein ID")
+    plt.ylabel("Charge at pH 7")
+    charge_at_pH_plot_path = os.path.join(temp_dir, 'charge_at_pH.png')
+    plt.savefig(charge_at_pH_plot_path)
+    plt.close()
 
 
+    # Create a BytesIO buffer to store the zip file contents
+    zip_buffer = BytesIO()
+
+    # Create a ZipFile object in memory
+    with zipfile.ZipFile(zip_buffer, 'a', zipfile.ZIP_DEFLATED, False) as zip_file:
+        # Add plot files to the zip file
+        zip_file.write(length_plot_path, arcname='length_plot.png')
+        zip_file.write(gravy_plot_path, arcname='gravy_plot.png')
+        zip_file.write(aliphatic_index_plot_path, arcname='aliphatic_index.png')
+        zip_file.write(instability_index_plot_path, arcname='instability_index.png')
+        zip_file.write(stability_plot_path, arcname='stability.png')
+        zip_file.write(molecular_weight_plot_path, arcname='molecular_weight.png')
+        zip_file.write(aromaticity_plot_path, arcname='aromaticity.png')
+        zip_file.write(isoelectric_point_plot_path, arcname='isoelectric_point.png')
+        zip_file.write(charge_at_pH_plot_path, arcname='charge_at_pH.png')
+
+    # Delete the temporary directory and its contents
+    os.remove(length_plot_path)
+    os.remove(gravy_plot_path)
+    os.remove(aliphatic_index_plot_path)
+    os.remove(instability_index_plot_path)
+    os.remove(stability_plot_path)
+    os.remove(molecular_weight_plot_path)
+    os.remove(aromaticity_plot_path)
+    os.remove(isoelectric_point_plot_path)
+    os.remove(charge_at_pH_plot_path)
+
+    # Seek to the beginning of the BytesIO buffer
+    zip_buffer.seek(0)
+
+    # Prepare the HTTP response with the zip file data as an attachment
+    response = HttpResponse(zip_buffer.read(), content_type='application/zip')
+    response['Content-Disposition'] = 'attachment; filename="plots.zip"'
+    return response
+    
+    
+        
