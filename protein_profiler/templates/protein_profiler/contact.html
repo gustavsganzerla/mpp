@@ -1,0 +1,92 @@
+{% extends 'base.html'%}
+
+{%block content%}
+
+<style>
+.form-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+.form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.form-row label {
+    width: 150px;
+    margin-right: 10px;
+    text-align: right;
+    box-sizing: border-box;
+}
+.form-row input[type="text"],
+.form-row input[type="email"],
+.form-row textarea {
+    flex: 1; 
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.form-row input[type="text"],
+.form-row input[type="email"] {
+    height: 38px; /* Ensure consistent height for text and email inputs */
+}
+.form-row textarea {
+    height: 100px;
+}
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.form-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+.form-buttons button[type="button"] {
+    background-color: #6c757d;
+}
+
+</style>
+
+<p> Contact form </p>
+
+
+<div class="form-container">
+    <form id="ContactForm" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-row">
+            <label for="{{ form.subject.id_for_label }}">Subject</label>
+            {{ form.subject }}
+        </div>
+        <div class="form-row">
+            <label for="{{ form.email.id_for_label }}">E-mail</label>
+            {{ form.email }}
+        </div>
+        <div class="form-row">
+            <label for="{{ form.message.id_for_label }}">Message</label>
+            {{ form.message }}
+        </div>
+        <div class="form-buttons">
+            <button type="submit">Send</button>
+            <button type="button" onclick="clearForm()">Clear</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function clearForm() {
+        document.getElementById("ContactForm").reset();
+    }
+</script>
+
+{%endblock%}

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponse
-from .forms import proteinForm
+from .forms import proteinForm, ContactForm
 
 from Bio import SeqIO
 from Bio.Seq import Seq
@@ -28,6 +28,9 @@ from django.conf import settings
 import os
 import tempfile
 import shutil
+
+from django.core.mail import EmailMessage, get_connection
+from django.conf import settings
 
 # Calculations
 def gravy(protein):
@@ -808,4 +811,42 @@ def download_plots(request):
     return response
     
     
-        
+def contact(request):
+    if request.method=='POST':
+        form = ContactForm(request.POST)
+
+        if form.is_valid():
+            collected_data = form.cleaned_data
+            subject = collected_data.get('subject')
+            email = collected_data.get('email')
+            message = collected_data.get('message')
+
+            with get_connection(
+                host = settings.EMAIL_HOST,
+                port = settings.EMAIL_PORT,
+                username = settings.EMAIL_HOST_USER,
+                password = settings.EMAIL_HOST_PASSWORD,
+                use_ssl = settings.EMAIL_USE_SSL
+            ) as connection:
+                subject = "MPP_"+subject
+                email_from = settings.EMAIL_HOST_USER
+                recipient_list = ['sganzerlagustavo@gmail.com']
+                message = f"{message}\n{email}"
+
+                email = EmailMessage(
+                    subject,
+                    message,
+                    email_from,
+                    recipient_list
+                )
+                email.send()
+                return render(request, 'protein_profiler/contact_success.html')
+    
+    else:
+        form = ContactForm()
+
+
+
+
+
+    return render(request, 'protein_profiler/contact.html', {'form': form})      
