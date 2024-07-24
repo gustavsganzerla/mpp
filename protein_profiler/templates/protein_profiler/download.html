@@ -2,8 +2,28 @@
 
 {% block content %}
 
-<iframe width="1220" height="686" src="https://www.youtube.com/embed/7J4pI9O2oT8" title="Multiple Protein Profiler - Local Executable" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-<p> This is a step by step guide to execute the local version of Multiple Protein Profiler 1.0.</p>
+<style>
+    .download-button {
+        background-color: #4ac4cf; 
+        border: none; 
+        color: black; 
+        padding: 15px 32px; 
+        text-align: center; 
+        text-decoration: none; 
+        display: inline-block; 
+        font-size: 14px;
+        margin: 4px 2px; 
+        cursor: pointer; 
+        border-radius: 8px; 
+      }
+    </style>
+
+<div class='content'>
+    <h1> Download the local executable.</h1><br>
+<h3>Do you need to run MPP on a local machine?</h3>
+    <br>
+
+<iframe  width="650" height="360" src="https://www.youtube.com/embed/7J4pI9O2oT8" title="Multiple Protein Profiler - Local Executable" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
     <p>The dependencies for MPP to execute locally are</p>
     <ul>
@@ -34,8 +54,10 @@
     
 
 
-<button id="downloadButton">Download Zip File</button>
 
+<button type="download" class="download-button">Download</button>
+
+    </div>
 
 <script>
     document.getElementById("downloadButton").addEventListener("click", function() {

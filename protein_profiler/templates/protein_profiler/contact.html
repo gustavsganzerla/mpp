@@ -48,18 +48,19 @@
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
-    color: white;
+    background-color: #4ac4cf;
+    color: black;
     cursor: pointer;
 }
+
 .form-buttons button[type="button"] {
     background-color: #6c757d;
 }
 
 </style>
 
-<p> Contact form </p>
-
+<div class='content'>
+    <h1>Reach out to us!</h1>
 
 <div class="form-container">
     <form id="ContactForm" method="POST" enctype="multipart/form-data">
@@ -78,9 +79,10 @@
         </div>
         <div class="form-buttons">
             <button type="submit">Send</button>
-            <button type="button" onclick="clearForm()">Clear</button>
+           
         </div>
     </form>
+</div>
 </div>
 
 <script>

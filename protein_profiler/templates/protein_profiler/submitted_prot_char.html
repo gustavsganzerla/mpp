@@ -29,7 +29,6 @@
             background-color: #e0e0e0;
         }
     
-        /* Center text in the first column */
         th:first-child, td:first-child {
             text-align: center;
         }
@@ -40,8 +39,8 @@
             bottom: 20px;
             right: 20px;
             z-index: 99;
-            background-color: #007bff;
-            color: white;
+            background-color: #4ac4cf;
+            color: black;
             border: none;
             border-radius: 50%;
             padding: 15px;
@@ -51,12 +50,36 @@
         }
         .button-container {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
+            align-items: flex-start;
         }
         
         .button-container a {
-            margin-right: 10px; /* Adjust spacing between buttons if needed */
+            display: inline-block;
+            width: 250px; /* Set a fixed width for the buttons */
+            padding: 10px; /* Adjust padding as needed */
+            margin-bottom: 5px; /* Adjust spacing between buttons if needed */
+            text-align: center; /* Center the text inside the buttons */
+            text-decoration: none; /* Remove underline from links */
+            background-color: #4ac4cf; /* Background color for the buttons */
+            color: black; /* Text color */
+            border: none; /* Remove borders */
+            border-radius: 5px; /* Optional: Rounded corners */
+            cursor: pointer; /* Pointer/hand icon */
         }
+        .download-button {
+            background-color: #4ac4cf; 
+            border: none; 
+            color: black; 
+            padding: 15px 32px; 
+            text-align: center; 
+            text-decoration: none; 
+            display: inline-block; 
+            font-size: 14px;
+            margin: 4px 2px; 
+            cursor: pointer; 
+            border-radius: 8px; 
+          }
 
     </style>
     </head>
@@ -66,10 +89,11 @@
         <h1>Results</h1>
         {% if csv_content %}
         <div class="button-container">
-            <a href="{% url 'protein_profiler:download_csv' %}" download class="btn btn-primary">
+            <a href="{% url 'protein_profiler:download_csv' %}" download class="download-button">
                 Download Profiled Proteins as .csv
             </a>
-            <a href="{% url 'protein_profiler:download_plots' %}" download class="btn btn-primary">
+            <br>
+            <a href="{% url 'protein_profiler:download_plots' %}" download class="download-button">
                 Download Zipped Plots
             </a>
         </div>
