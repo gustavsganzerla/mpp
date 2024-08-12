@@ -1,4 +1,5 @@
 from django import forms
+from django_recaptcha.fields import ReCaptchaField
 
 class proteinForm(forms.Form):
     protein_text = forms.CharField(widget=forms.Textarea(attrs={"rows":8, 
@@ -16,3 +17,4 @@ class ContactForm(forms.Form):
                                                                 "cols":40,
                                                                 "placeholder":"Type your message here"}),
                                                                 required=True)
+    captcha = ReCaptchaField()
