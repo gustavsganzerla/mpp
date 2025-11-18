@@ -309,7 +309,7 @@ def prot_char(request):
                         
 
                         aa_percentage = get_amino_acids_percent(protein)
-                        aa_percentage_non_zero = {k: v for k, v in aa_percentage.items() if v}
+                        aa_percentage_non_zero = {k: round(v, 2) for k, v in aa_percentage.items() if v}
                         output.append({
                             'accession': accession,
                             'length': len(protein),
@@ -366,7 +366,7 @@ def prot_char(request):
                             stability = "Unstable"
 
                         aa_percentage = get_amino_acids_percent(protein)
-                        aa_percentage_non_zero = {k: v for k, v in aa_percentage.items() if v}
+                        aa_percentage_non_zero = {k: round(v, 2) for k, v in aa_percentage.items() if v}
                         output.append({
                             'accession': str(accession),
                             'length': len(protein),
@@ -419,6 +419,10 @@ def submitted_prot_char(request):
                             'Aromaticity',
                             'Isoelectric Point',
                             'Charge at pH 7',
+                            'Secondary Structure Fraction',
+                            'Molar Extinction Coefficient',
+                            'Atomic Composition',
+                            'Amini acid Composition'
                             ])
         
         for sequence in output:
@@ -434,7 +438,11 @@ def submitted_prot_char(request):
                 sequence['molecular_weight'],
                 sequence['aromaticity'],
                 sequence['isoelectric_point'],
-                sequence['charge_at_pH']
+                sequence['charge_at_pH'],
+                sequence['secondary_structure_fraction'],
+                sequence['atomic_composition'],
+                sequence['get_amino_acids_percent']
+
 
             ])
         request.session['csv_content'] = csv_content
