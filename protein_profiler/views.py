@@ -381,7 +381,7 @@ def prot_char(request):
                             'secondary_structure_fraction': secondary_structure_fraction(protein),
                             'molar_extinction_coefficient': molar_extinction_coefficient(protein),
                             'charge_at_pH': charge_at_pH(protein, 7),
-                            'get_amino_acids_percent': get_amino_acids_percent(aa_percentage_non_zero),
+                            'get_amino_acids_percent': aa_percentage_non_zero,
                             'description': description,
                             'sequence': protein,
                             'id':i,
