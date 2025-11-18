@@ -419,10 +419,10 @@ def submitted_prot_char(request):
                             'Aromaticity',
                             'Isoelectric Point',
                             'Charge at pH 7',
-                            'Secondary Structure Fraction',
-                            'Molar Extinction Coefficient',
+                            'Secondary Structure Fraction (helix, turn, sheet)',
+                            'Molar Extinction Coefficient (reduced, oxidized)',
                             'Atomic Composition',
-                            'Amini acid Composition'
+                            'Amino Acid Composition'
                             ])
         
         for sequence in output:
@@ -440,6 +440,7 @@ def submitted_prot_char(request):
                 sequence['isoelectric_point'],
                 sequence['charge_at_pH'],
                 sequence['secondary_structure_fraction'],
+                sequence['molar_extinction_coefficient'],
                 sequence['atomic_composition'],
                 sequence['get_amino_acids_percent']
 
