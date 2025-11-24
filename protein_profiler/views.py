@@ -397,7 +397,6 @@ def prot_char(request):
                             'atomic_composition': atomic_composition(protein)
                         })
                         i+=1
-                    
 
                                         
                 # Redirect user to another page   
@@ -431,10 +430,31 @@ def submitted_prot_char(request):
                             'Secondary Structure Fraction (helix, turn, sheet)',
                             'Molar Extinction Coefficient (reduced, oxidized)',
                             'Atomic Composition',
-                            'Amino Acid Composition'
+                            'A counts',
+                            'R counts',
+                            'N counts',
+                            'D counts',
+                            'C counts',
+                            'Q counts',
+                            'E counts',
+                            'G counts',
+                            'H counts',
+                            'I counts',
+                            'K counts',
+                            'L counts',
+                            'M counts',
+                            'F counts',
+                            'P counts',
+                            'S counts',
+                            'T counts',
+                            'W counts',
+                            'Y counts',
+                            'V counts'
                             ])
         
+        amino_acids = ['A','R','N','D','C','Q','E','G','H','I','K','L','M','F','P','S','T','W','Y','V']
         for sequence in output:
+            aa_counts = sequence['aa_counts']
             csv_content.append([
                 sequence['accession'],
                 sequence['sequence'],
@@ -451,7 +471,7 @@ def submitted_prot_char(request):
                 sequence['secondary_structure_fraction'],
                 sequence['molar_extinction_coefficient'],
                 sequence['atomic_composition'],
-                sequence['get_amino_acids_percent']
+                *[aa_counts.get(aa,0) for aa in amino_acids]
 
 
             ])

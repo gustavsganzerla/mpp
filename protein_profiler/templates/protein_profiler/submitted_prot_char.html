@@ -192,11 +192,9 @@
                     N<sub>{{ item.atomic_composition.3 }}</sub>
                     S<sub>{{ item.atomic_composition.4 }}</sub>
                 </td>
-                {% for value in aa_counts.values%}
-                <td>{{value}}</td>
-                {%endfor%}
-    
-            </tr>
+                {% for count in item.aa_counts.values %}
+                <td>{{count}}
+                    {% endfor %}
             {% endfor %}
         </tbody>
     </table>
