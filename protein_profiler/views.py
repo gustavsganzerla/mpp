@@ -259,6 +259,15 @@ def get_amino_acids_percent(protein):
     return x.get_amino_acids_percent()
 
 
+def aa_counts(protein):
+    allowed_aa = ['A','R','N','D','C','Q','E','G','H','I','K','L','M','F','P','S','T','W','Y','V']
+    counts = {el: 0 for el in allowed_aa}
+
+    for el in allowed_aa:
+        counts[el] = protein.count(el)
+
+    return counts
+    
 
 
 # Create your views here.
@@ -324,7 +333,7 @@ def prot_char(request):
                             'secondary_structure_fraction': secondary_structure_fraction(protein),
                             'molar_extinction_coefficient': molar_extinction_coefficient(protein),
                             'charge_at_pH': charge_at_pH(protein, 7),
-                            'get_amino_acids_percent': aa_percentage_non_zero,
+                            'aa_counts': aa_counts(protein),
                             'description': description,
                             'sequence': protein,
                             'id':i,
@@ -381,7 +390,7 @@ def prot_char(request):
                             'secondary_structure_fraction': secondary_structure_fraction(protein),
                             'molar_extinction_coefficient': molar_extinction_coefficient(protein),
                             'charge_at_pH': charge_at_pH(protein, 7),
-                            'get_amino_acids_percent': aa_percentage_non_zero,
+                            'aa_counts': aa_counts(protein),
                             'description': description,
                             'sequence': protein,
                             'id':i,

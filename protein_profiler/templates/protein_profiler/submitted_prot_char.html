@@ -135,7 +135,26 @@
                 <th>Secondary Structure Fraction (Helix; Turn; Sheet)</th>
                 <th>Molar Extinction Coefficient (Reduced; Oxidized)</th>
                 <th>Atomic Composition</th>
-                <th>Amino Acid Composition </th>
+                <th>A counts</th>
+                <th>R counts</th>
+                <th>N counts</th>
+                <th>D counts</th>
+                <th>C counts</th>
+                <th>Q counts</th>
+                <th>E counts</th>
+                <th>G counts</th>
+                <th>H counts</th>
+                <th>I counts</th>
+                <th>K counts</th>
+                <th>L counts</th>
+                <th>M counts</th>
+                <th>F counts</th>
+                <th>P counts</th>
+                <th>S counts</th>
+                <th>T counts</th>
+                <th>W counts</th>
+                <th>Y counts</th>
+                <th>V counts</th>
                
             </tr>
         </thead>
@@ -173,7 +192,9 @@
                     N<sub>{{ item.atomic_composition.3 }}</sub>
                     S<sub>{{ item.atomic_composition.4 }}</sub>
                 </td>
-                <td>{{item.get_amino_acids_percent}}
+                {% for value in aa_counts.values%}
+                <td>{{value}}</td>
+                {%endfor%}
     
             </tr>
             {% endfor %}
