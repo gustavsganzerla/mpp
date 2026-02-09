@@ -6,6 +6,7 @@ from .forms import proteinForm, ContactForm
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqUtils.ProtParam import ProteinAnalysis
+from Bio.SeqUtils import IsoelectricPoint
 from io import StringIO
 from io import BytesIO
 import re
@@ -99,9 +100,52 @@ def aromaticity(protein):
     x = ProteinAnalysis(protein)
     return(round(x.aromaticity(),2))
 
-def isoelectric_point(protein):
-    x = ProteinAnalysis(protein)
-    return(round(x.isoelectric_point(),2))
+pKa = {
+    'Cterm': 3.55,
+    'Nterm': 7.5,
+    'C': 9.0,
+    'D': 4.05,
+    'E': 4.45,
+    'H': 5.98,
+    'K': 10.0,
+    'R': 12.0,
+    'Y': 10.0
+}
+
+def net_charge(seq, pH):
+    seq = seq.upper()
+    counts = Counter(seq)
+
+    charge = 0.0
+
+    # N-terminus
+    charge += 1 / (1 + 10**(pH - pKa['Nterm']))
+
+    # C-terminus
+    charge += -1 / (1 + 10**(pKa['Cterm'] - pH))
+
+    # Positive residues
+    for aa in ['K', 'R', 'H']:
+        charge += counts[aa] / (1 + 10**(pH - pKa[aa]))
+
+    # Negative residues
+    for aa in ['D', 'E', 'C', 'Y']:
+        charge += -counts[aa] / (1 + 10**(pKa[aa] - pH))
+
+    return charge
+
+def isoelectric_point(seq, tol=1e-4):
+    low, high = 0.0, 14.0
+
+    while high - low > tol:
+        mid = (low + high) / 2
+
+        if net_charge(seq, mid) > 0:
+            low = mid
+        else:
+            high = mid
+
+    return round((low + high) / 2, 2)
 
 def atomic_composition(protein):
     c = 0
@@ -373,6 +417,7 @@ def prot_char(request):
                             stability = "Stable"
                         else:
                             stability = "Unstable"
+
 
                         aa_percentage = get_amino_acids_percent(protein)
                         aa_percentage_non_zero = {k: round(v, 2) for k, v in aa_percentage.items() if v}
